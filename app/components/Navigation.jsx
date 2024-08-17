@@ -55,8 +55,7 @@ const Navigation = () => {
         className={`lg:flex lg:items-center lg:gap-4 absolute lg:static top-16 left-0 w-full lg:w-auto bg-white shadow-md lg:shadow-none ${isMenuOpen ? 'block' : 'hidden'}`}
       >
         <Link href="/add" onClick={handleLinkClick} className="block px-4 py-2 text-gray-700 hover:text-gray-900">Add Event</Link>
-        <Link href="/view" onClick={handleLinkClick} className="block px-4 py-2 text-gray-700 hover:text-gray-900">View Events</Link>
-        <Link href="/about" onClick={handleLinkClick} className="block px-4 py-2 text-gray-700 hover:text-gray-900">About Us</Link>
+        <Link href="/view" onClick={handleLinkClick} className="block px-4 py-2 text-gray-700 hover:text-gray-900">My Events</Link>
       </div>
     </div>
   );

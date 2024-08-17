@@ -12,10 +12,13 @@ import {
   addMonths,
   subMonths,
   isWithinInterval,
+  isToday,
 } from "date-fns";
 import { EventsContext } from "@/app/context/EventsContext";
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';  // Import styles
 
 const categoryColors = {
   Work: 'bg-orange-500',
@@ -28,7 +31,7 @@ export default function Home() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
   const { events, setEvents } = useContext(EventsContext);
-  const router = useRouter(); // useRouter hook for navigation
+  const router = useRouter();
 
   useEffect(() => {
     const storedEvents = localStorage.getItem("events");
@@ -42,13 +45,17 @@ export default function Home() {
   };
 
   const handleEventClick = (eventId) => {
-    router.push(`/detail/${eventId}`); // Navigate to the detail page
+    router.push(`/detail/${eventId}`);
   };
 
   const handleDeleteEvent = (eventId) => {
-    const updatedEvents = events.filter((event) => event.id !== eventId);
-    setEvents(updatedEvents);
-    localStorage.setItem("events", JSON.stringify(updatedEvents));
+    const confirmDelete = window.confirm("Are you sure you want to delete this event?");
+    if (confirmDelete) {
+      const updatedEvents = events.filter((event) => event.id !== eventId);
+      setEvents(updatedEvents);
+      localStorage.setItem("events", JSON.stringify(updatedEvents));
+      toast.success("Event deleted successfully!");
+    }
   };
 
   const renderHeader = () => (
@@ -90,6 +97,7 @@ export default function Home() {
     const monthEnd = endOfMonth(monthStart);
     const startDate = startOfWeek(monthStart);
     const endDate = endOfWeek(monthEnd);
+    const today = new Date();
 
     const rows = [];
     let days = [];
@@ -107,7 +115,9 @@ export default function Home() {
           <div
             className={`relative p-4 border h-20 cursor-pointer ${
               !isSameMonth(day, monthStart) ? "text-gray-400" : ""
-            } ${isSameDay(day, selectedDate) ? "bg-blue-200" : ""}`}
+            } ${isSameDay(day, selectedDate) ? "bg-blue-200" : ""} ${
+              isToday(day) ? "bg-green-200" : ""
+            }`}
             key={day.toString()}
             onClick={() => handleDateClick(cloneDay)}
           >
@@ -119,8 +129,8 @@ export default function Home() {
                     key={event.id}
                     className={`w-3 h-3 rounded-full ${categoryColors[event.category]} cursor-pointer`}
                     onClick={(e) => {
-                      e.stopPropagation(); // Prevent triggering the day click
-                      handleEventClick(event.id); // Navigate to event detail
+                      e.stopPropagation();
+                      handleEventClick(event.id);
                     }}
                   />
                 ))}
@@ -257,6 +267,7 @@ export default function Home() {
 
         {renderSelectedDateEvents()}
       </div>
+      <ToastContainer />
     </div>
   );
 }
