@@ -250,8 +250,8 @@ export default function Home() {
   };
 
   return (
-    <div className="container bg-[#e0afa0] mx-auto p-4 flex flex-col md:flex-row gap-6">
-      <div className="flex-1 bg-[#463f3a] p-2 rounded-md">
+    <div className="container bg-[#e0afa0]  min-h-screen mx-auto p-4 flex flex-col md:flex-row gap-6">
+      <div className="flex-1 bg-[#463f3a] h-full p-4 rounded-md">
         {renderHeader()}
         <div className="bg-[#f4f3ee] p-2 rounded-lg">
           {renderDays()}
@@ -259,7 +259,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex-1 bg-[#f4f3ee] p-4 rounded-md">
+      <div className="flex-1 bg-[#f4f3ee] p-4 h-[80vh] rounded-md">
         <div className="mb-4">
           {selectedDate && (
             <p className="text-2xl font-bold text-center">
@@ -272,7 +272,7 @@ export default function Home() {
                 ? `/add/${format(selectedDate, "yyyy-MM-dd")}`
                 : `/add`
             }
-            className="text-blue-500 hover:underline block text-center"
+            className="text-blue-500 text-xl  hover:underline block text-center"
           >
             Add Event
           </a>

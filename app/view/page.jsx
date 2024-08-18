@@ -50,7 +50,7 @@ const ViewEvents = () => {
   };
 
   const renderYearHeader = () => (
-    <div className="flex justify-between items-center py-4 ">
+    <div className="flex justify-between items-center py-4">
       <button
         onClick={() => handleYearChange('prev')}
         className="bg-blue-500 text-white px-3 py-1 text-sm rounded hover:bg-blue-600"
@@ -68,6 +68,10 @@ const ViewEvents = () => {
   );
 
   const renderEvents = () => {
+    if (filteredEvents.length === 0) {
+      return <p className="text-center text-lg text-gray-500 mt-4">No upcoming events for this year.</p>;
+    }
+
     const groupedEvents = filteredEvents.reduce((acc, event) => {
       const eventDate = new Date(event.date);
       const year = format(eventDate, 'yyyy');
