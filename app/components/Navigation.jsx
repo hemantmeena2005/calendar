@@ -17,10 +17,10 @@ const Navigation = () => {
   };
 
   return (
-    <div className="flex justify-between p-5 items-center bg-white shadow-md">
+    <div className="flex justify-between p-5 items-center bg-[#f4f3ee] shadow-md">
       <div className="flex justify-between items-center w-full lg:w-auto">
         <div className="text-3xl font-bold">
-          <Link href="/" onClick={handleLinkClick}>Calendar App</Link>
+          <Link href="/" onClick={handleLinkClick} className='text-blue-500' >Calendar App</Link>
         </div>
         <button
           onClick={toggleMenu}
@@ -52,7 +52,7 @@ const Navigation = () => {
         </button>
       </div>
       <div
-        className={`lg:flex lg:items-center lg:gap-4 absolute lg:static top-16 left-0 w-full lg:w-auto bg-white shadow-md lg:shadow-none ${isMenuOpen ? 'block' : 'hidden'}`}
+        className={`lg:flex lg:items-center lg:gap-4 absolute lg:static top-16 left-0 w-full lg:w-auto bg-[#f4f3ee] shadow-md lg:shadow-none ${isMenuOpen ? 'block' : 'hidden'}`}
       >
         <Link href="/add" onClick={handleLinkClick} className="block px-4 py-2 text-gray-700 hover:text-gray-900">Add Event</Link>
         <Link href="/view" onClick={handleLinkClick} className="block px-4 py-2 text-gray-700 hover:text-gray-900">My Events</Link>

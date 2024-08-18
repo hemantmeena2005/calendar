@@ -5,12 +5,12 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 const DetailPage = () => {
-  const pathname = usePathname(); // Get the current path
+  const pathname = usePathname();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const eventId = pathname.split('/').pop(); // Extract the ID from the path
+    const eventId = pathname.split("/").pop();
     const storedEvents = localStorage.getItem("events");
     if (storedEvents) {
       const events = JSON.parse(storedEvents);
@@ -29,14 +29,28 @@ const DetailPage = () => {
   }
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-4">{event.title}</h1>
-      <p className="text-lg mb-2"><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-      <p className="text-lg mb-2"><strong>Category:</strong> {event.category}</p>
-      <p className="text-lg mb-4"><strong>Description:</strong> {event.desc}</p>
-      <Link href={`/update/${event.id}`}>
-        <button className="text-blue-500 hover:underline">Update</button>
-      </Link>
+    <div className="flex justify-center items-center min-h-screen bg-[#8a817c] p-4">
+      <div className="w-full max-w-sm bg-[#f4f3ee] p-6 md:p-8 rounded-lg shadow-lg">
+        <h1 className="text-2xl md:text-4xl font-bold mb-4 md:mb-6 text-center">
+          {event.title}
+        </h1>
+        <p className="text-base md:text-lg mb-3 md:mb-4">
+          <strong>Date:</strong> {new Date(event.date).toLocaleDateString()}
+        </p>
+        <p className="text-base md:text-lg mb-3 md:mb-4">
+          <strong>Category:</strong> {event.category}
+        </p>
+        <p className="text-base md:text-lg mb-4 md:mb-6">
+          <strong>Description:</strong> {event.desc}
+        </p>
+        <div className="text-center">
+          <Link href={`/update/${event.id}`}>
+            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 w-full md:w-auto">
+              Update
+            </button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

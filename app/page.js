@@ -15,16 +15,16 @@ import {
   isToday,
 } from "date-fns";
 import { EventsContext } from "@/app/context/EventsContext";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';  // Import styles
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import styles
 
 const categoryColors = {
-  Work: 'bg-orange-500',
-  Personal: 'bg-blue-500',
-  Entertainment: 'bg-yellow-500',
-  Others: 'bg-green-500',
+  Work: "bg-orange-500",
+  Personal: "bg-blue-500",
+  Entertainment: "bg-yellow-500",
+  Others: "bg-green-500",
 };
 
 export default function Home() {
@@ -49,7 +49,9 @@ export default function Home() {
   };
 
   const handleDeleteEvent = (eventId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this event?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this event?"
+    );
     if (confirmDelete) {
       const updatedEvents = events.filter((event) => event.id !== eventId);
       setEvents(updatedEvents);
@@ -62,14 +64,16 @@ export default function Home() {
     <div className="flex justify-between items-center py-4">
       <button
         onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
-        className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+        className="px-3 py-1 bg-[#f4f3ee] rounded hover:bg-gray-300"
       >
         Prev
       </button>
-      <h2 className="text-lg font-bold">{format(currentMonth, "MMMM yyyy")}</h2>
+      <h2 className="text-lg font-bold text-white ">
+        {format(currentMonth, "MMMM yyyy")}
+      </h2>
       <button
         onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-        className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+        className="px-3 py-1 bg-[#f4f3ee] rounded hover:bg-gray-300"
       >
         Next
       </button>
@@ -113,7 +117,7 @@ export default function Home() {
 
         days.push(
           <div
-            className={`relative p-4 border h-20 cursor-pointer ${
+            className={`relative p-4 border h-15 md:h-20 lg:h-15 cursor-pointer ${
               !isSameMonth(day, monthStart) ? "text-gray-400" : ""
             } ${isSameDay(day, selectedDate) ? "bg-blue-200" : ""} ${
               isToday(day) ? "bg-green-200" : ""
@@ -123,11 +127,13 @@ export default function Home() {
           >
             <span className="block">{formattedDate}</span>
             {eventsForDay.length > 0 && (
-              <div className="absolute bottom-2 left-2 flex flex-wrap gap-1">
-                {eventsForDay.map((event) => (
+              <div className="absolute bottom-2 right-2 md:bottom-2 md:left-2 flex gap-1">
+                {eventsForDay.slice(0, 1).map((event) => (
                   <div
                     key={event.id}
-                    className={`w-3 h-3 rounded-full ${categoryColors[event.category]} cursor-pointer`}
+                    className={`w-2.5 h-2.5 md:w-3 md:h-3 rounded-full ${
+                      categoryColors[event.category]
+                    } cursor-pointer`}
                     onClick={(e) => {
                       e.stopPropagation();
                       handleEventClick(event.id);
@@ -163,7 +169,7 @@ export default function Home() {
       );
 
       return (
-        <div className="mt-6">
+        <div className="mt-6 p-3 ">
           <h3 className="text-lg font-bold">
             Events in {format(currentMonth, "MMMM yyyy")}
           </h3>
@@ -174,11 +180,11 @@ export default function Home() {
               {eventsForMonth.map((event) => (
                 <li key={event.id} className="mt-2">
                   <div className="flex items-center justify-between">
-                    <p className="text-sm">{event.title}</p>
+                    <p className="text-xl text-[#8a817c]  ">{event.title}</p>
                     <div>
                       <a
                         href={`/update/${event.id}`}
-                        className="text-blue-500 hover:underline ml-4"
+                        className="text-blue-500  hover:underline ml-4"
                       >
                         Edit
                       </a>
@@ -202,7 +208,7 @@ export default function Home() {
       );
 
       return (
-        <div className="mt-6">
+        <div className="mt-6  ">
           <h3 className="text-lg font-bold">
             Events on {format(selectedDate, "MMMM d, yyyy")}
           </h3>
@@ -211,9 +217,14 @@ export default function Home() {
           ) : (
             <ul>
               {eventsForSelectedDate.map((event) => (
-                <li key={event.id} className="mt-2">
+                <li key={event.id} className="mt-2 ">
                   <div className="flex items-center justify-between">
-                    <Link href={`/detail/${event.id}`}>{event.title}</Link>
+                    <Link
+                      href={`/detail/${event.id}`}
+                      className="text-[#8a817c] hover:text-black text-xl"
+                    >
+                      {event.title}
+                    </Link>
                     <div>
                       <a
                         href={`/update/${event.id}`}
@@ -239,18 +250,20 @@ export default function Home() {
   };
 
   return (
-    <div className="container mx-auto p-6 flex flex-col md:flex-row gap-6">
-      <div className="flex-1">
+    <div className="container bg-[#e0afa0] mx-auto p-4 flex flex-col md:flex-row gap-6">
+      <div className="flex-1 bg-[#463f3a] p-2 rounded-md">
         {renderHeader()}
-        {renderDays()}
-        {renderCells()}
+        <div className="bg-[#f4f3ee] p-2 rounded-lg">
+          {renderDays()}
+          {renderCells()}
+        </div>
       </div>
 
-      <div className="flex-1">
-        <div className="mt-6">
+      <div className="flex-1 bg-[#f4f3ee] p-4 rounded-md">
+        <div className="mb-4">
           {selectedDate && (
-            <p className="text-lg font-bold">
-              Selected Date: {format(selectedDate, "MMMM d, yyyy")}
+            <p className="text-2xl font-bold text-center">
+              {format(selectedDate, "MMMM d, yyyy")}
             </p>
           )}
           <a
@@ -259,7 +272,7 @@ export default function Home() {
                 ? `/add/${format(selectedDate, "yyyy-MM-dd")}`
                 : `/add`
             }
-            className="text-blue-500 hover:underline"
+            className="text-blue-500 hover:underline block text-center"
           >
             Add Event
           </a>
