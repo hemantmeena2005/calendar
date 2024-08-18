@@ -68,7 +68,7 @@ export default function Home() {
       >
         Prev
       </button>
-      <h2 className="text-lg font-bold text-white ">
+      <h2 className="text-lg font-bold text-white">
         {format(currentMonth, "MMMM yyyy")}
       </h2>
       <button
@@ -169,8 +169,9 @@ export default function Home() {
       );
 
       return (
-        <div className="mt-6 p-3 ">
-          <h3 className="text-lg font-bold">
+        <div className="mt-6 p-3 text-center ">
+          <Link href={'/add'} className="text-xl  text-center text-blue-500" >Add Event</Link>
+          <h3 className="text-2xl mt-5 font-bold">
             Events in {format(currentMonth, "MMMM yyyy")}
           </h3>
           {eventsForMonth.length === 0 ? (
@@ -180,11 +181,11 @@ export default function Home() {
               {eventsForMonth.map((event) => (
                 <li key={event.id} className="mt-2">
                   <div className="flex items-center justify-between">
-                    <p className="text-xl text-[#8a817c]  ">{event.title}</p>
+                    <p className="text-xl text-[#8a817c]">{event.title}</p>
                     <div>
                       <a
                         href={`/update/${event.id}`}
-                        className="text-blue-500  hover:underline ml-4"
+                        className="text-blue-500 hover:underline ml-4"
                       >
                         Edit
                       </a>
@@ -208,20 +209,21 @@ export default function Home() {
       );
 
       return (
-        <div className="mt-6  ">
-          <h3 className="text-lg font-bold">
-            Events on {format(selectedDate, "MMMM d, yyyy")}
+        <div className="mt-6">
+          
+          <h3 className=" text-center text-2xl font-bold">
+            Events on : {format(selectedDate, "MMMM d, yyyy")}
           </h3>
           {eventsForSelectedDate.length === 0 ? (
             <p>No events for this date.</p>
           ) : (
             <ul>
               {eventsForSelectedDate.map((event) => (
-                <li key={event.id} className="mt-2 ">
+                <li key={event.id} className="mt-2">
                   <div className="flex items-center justify-between">
                     <Link
                       href={`/detail/${event.id}`}
-                      className="text-[#8a817c] hover:text-black text-xl"
+                      className="text-[#8a817c]  hover:text-black text-xl"
                     >
                       {event.title}
                     </Link>
@@ -250,34 +252,17 @@ export default function Home() {
   };
 
   return (
-    <div className="container bg-[#e0afa0]  min-h-screen mx-auto p-4 flex flex-col md:flex-row gap-6">
-      <div className="flex-1 bg-[#463f3a] h-full p-4 rounded-md">
+    <div className="container bg-[#e0afa0] min-h-screen mx-auto p-4 flex flex-col lg:flex-row gap-6">
+      {/* Calendar Div */}
+      <div className="flex-1 bg-[#463f3a] h-[85vh] lg:h-[85vh] p-4 rounded-md">
         {renderHeader()}
         <div className="bg-[#f4f3ee] p-2 rounded-lg">
           {renderDays()}
           {renderCells()}
         </div>
       </div>
-
-      <div className="flex-1 bg-[#f4f3ee] p-4 h-[80vh] rounded-md">
-        <div className="mb-4">
-          {selectedDate && (
-            <p className="text-2xl font-bold text-center">
-              {format(selectedDate, "MMMM d, yyyy")}
-            </p>
-          )}
-          <a
-            href={
-              selectedDate
-                ? `/add/${format(selectedDate, "yyyy-MM-dd")}`
-                : `/add`
-            }
-            className="text-blue-500 text-xl  hover:underline block text-center"
-          >
-            Add Event
-          </a>
-        </div>
-
+      {/* Events Div */}
+      <div className="flex-1 bg-[#f4f3ee] p-4 h-[85vh] lg:h-[85vh] rounded-md">
         {renderSelectedDateEvents()}
       </div>
       <ToastContainer />
